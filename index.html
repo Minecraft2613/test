@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minecraft Server Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="loading-screen">
+    <h1>🚀 Loading...</h1>
+  </div>
+
+  <header>
+    <button id="menu-toggle">☰</button>
+    <nav id="main-menu" class="hidden">
+      <ul>
+        <li><a href="#rewards">🎁 Daily Rewards</a></li>
+        <li><a href="#server">🖥️ Server Panel</a></li>
+        <li><a href="#form">📝 Form</a></li>
+        <li><a href="#support">📬 Support</a></li>
+        <li><a href="#tax">💰 View Tax</a></li>
+        <li><a href="#account">⚙️ Account Settings</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="login-section" class="glowBox">
+      <h2>🔐 Login to Your Account</h2>
+      <input type="text" id="username" placeholder="Enter username" required>
+      <input type="password" id="password" placeholder="Enter password" required>
+      <button id="loginBtn">Login</button>
+      <p id="login-status"></p>
+    </section>
+
+    <section id="server" class="glowBox">
+      <h2>🖥️ Server Info</h2>
+      <div id="server-status">Checking...</div>
+    </section>
+
+    <section id="account" class="glowBox">
+      <h2>⚙️ Account Settings</h2>
+      <label>Contact ID</label>
+      <input type="text" id="contact-id" placeholder="Discord / Instagram">
+      <label>Profile Picture URL</label>
+      <input type="text" id="profile-pic-url" placeholder="Paste image URL">
+      <img id="profile-preview" src="" alt="Profile Preview" style="display:none;">
+      <button id="save-settings">💾 Save</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
