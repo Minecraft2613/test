@@ -1,16 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Minecraft Server Portal</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: linear-gradient(45deg, #121212, #1e1e1e, #292929, #1b1b1b);
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
+      color: #fff;
+      padding: 0 20px;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    header {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+    }
+    #menu-toggle {
+      font-size: 24px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    nav li {
+      margin: 10px 0;
+    }
+    nav.hidden {
+      display: none;
+    }
+    nav a {
+      color: #00ffff;
+      text-decoration: none;
+    }
+    .glowBox {
+      background: #1e1e1e;
+      margin: 20px 0;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px #00ffe1;
+    }
+    input, button {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      background: #00ffcc;
+      font-weight: bold;
+      color: black;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #00ccb3;
+    }
+    #profile-preview {
+      width: 100px;
+      height: 100px;
+      margin-top: 10px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <div id="loading-screen">
-    <h1>🚀 Loading...</h1>
-  </div>
-
   <header>
     <button id="menu-toggle">☰</button>
     <nav id="main-menu" class="hidden">
@@ -19,37 +89,112 @@
         <li><a href="#server">🖥️ Server Panel</a></li>
         <li><a href="#form">📝 Form</a></li>
         <li><a href="#support">📬 Support</a></li>
-        <li><a href="#tax">💰 View Tax</a></li>
+        <li><a href="https://minecraft2613.github.io/taxess/" target="_blank">💰 View Tax</a></li>
         <li><a href="#account">⚙️ Account Settings</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <section id="login-section" class="glowBox">
-      <h2>🔐 Login to Your Account</h2>
-      <input type="text" id="username" placeholder="Enter username" required>
-      <input type="password" id="password" placeholder="Enter password" required>
-      <button id="loginBtn">Login</button>
-      <p id="login-status"></p>
-    </section>
-
     <section id="server" class="glowBox">
       <h2>🖥️ Server Info</h2>
-      <div id="server-status">Checking...</div>
+      <p><strong>Java & Bedrock IP:</strong> mc1524209.fmcs.cloud</p>
+      <p><strong>Port:</strong> 38762</p>
+      <p><strong>Version:</strong> Java 1.21.4+ | Bedrock 1.21+</p>
+    </section>
+
+    <section id="form" class="glowBox">
+      <h2>📝 Form</h2>
+      <p><a href="https://minecraft2613.github.io/joining-form/" target="_blank">Click here to fill your joining bonus form</a></p>
+    </section>
+
+    <section id="support" class="glowBox">
+      <h2>📬 Support</h2>
+      <ul>
+        <li><a href="https://discord.gg/yourdiscord" target="_blank">Discord Server</a></li>
+        <li><a href="https://instagram.com/yourpage" target="_blank">Instagram</a></li>
+        <li><a href="https://yourdomain.com/tickets" target="_blank">Ticket System</a></li>
+      </ul>
     </section>
 
     <section id="account" class="glowBox">
       <h2>⚙️ Account Settings</h2>
-      <label>Contact ID</label>
-      <input type="text" id="contact-id" placeholder="Discord / Instagram">
+      <label>Contact ID (Discord / Instagram)</label>
+      <input type="text" id="contact-id" placeholder="Enter contact ID">
       <label>Profile Picture URL</label>
-      <input type="text" id="profile-pic-url" placeholder="Paste image URL">
-      <img id="profile-preview" src="" alt="Profile Preview" style="display:none;">
-      <button id="save-settings">💾 Save</button>
+      <input type="text" id="profile-pic-url" placeholder="Enter image URL">
+      <img id="profile-preview" alt="Profile Preview">
+      <button id="save-settings">💾 Save Settings</button>
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <script>
+    const SYNC_URL = "https://minecraft-details-acc.1987sakshamsingh.workers.dev/";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const menuToggle = document.getElementById("menu-toggle");
+      const menu = document.getElementById("main-menu");
+      const contactInput = document.getElementById("contact-id");
+      const profileInput = document.getElementById("profile-pic-url");
+      const profilePreview = document.getElementById("profile-preview");
+
+      menuToggle.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+      });
+
+      document.getElementById("save-settings").addEventListener("click", async () => {
+        const username = localStorage.getItem("account_username") || prompt("Enter your username:");
+        if (!username) return;
+
+        const contact = contactInput.value.trim();
+        const picURL = profileInput.value.trim();
+        const payload = { username, contact, profilePic: picURL };
+
+        localStorage.setItem("account_username", username);
+        localStorage.setItem("account_contact", contact);
+        localStorage.setItem("account_profile_pic", picURL);
+
+        if (picURL) {
+          profilePreview.src = picURL;
+          profilePreview.style.display = "block";
+        }
+
+        try {
+          await fetch(SYNC_URL, {
+            method: "POST",
+            headers: {{ "Content-Type": "application/json" }},
+            body: JSON.stringify(payload)
+          });
+          alert("✅ Settings saved to cloud.");
+        } catch (e) {
+          alert("❌ Failed to sync.");
+          console.error(e);
+        }
+      });
+
+      async function loadSettings() {
+        const username = localStorage.getItem("account_username");
+        if (!username) return;
+
+        try {
+          const res = await fetch(SYNC_URL);
+          const data = await res.json();
+          const user = data.find(u => u.username === username);
+          if (!user) return;
+
+          contactInput.value = user.contact || "";
+          profileInput.value = user.profilePic || "";
+          if (user.profilePic) {
+            profilePreview.src = user.profilePic;
+            profilePreview.style.display = "block";
+          }
+        } catch (err) {
+          console.error("Load failed:", err);
+        }
+      }
+
+      loadSettings();
+    });
+  </script>
 </body>
 </html>
