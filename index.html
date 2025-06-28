@@ -2,199 +2,174 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Minecraft Server Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Minecraft Bank Login</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
+    * {
       margin: 0;
-      background: linear-gradient(45deg, #121212, #1e1e1e, #292929, #1b1b1b);
-      background-size: 400% 400%;
-      animation: gradientBG 10s ease infinite;
-      color: #fff;
-      padding: 0 20px;
-    }
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    header {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-    }
-    #menu-toggle {
-      font-size: 24px;
-      background: transparent;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-    }
-    nav ul {
-      list-style: none;
       padding: 0;
-      margin: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
     }
-    nav li {
-      margin: 10px 0;
+
+    body {
+      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #fff;
     }
-    nav.hidden {
-      display: none;
+
+    .glass {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 40px;
+      width: 90%;
+      max-width: 400px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      animation: slideUp 0.6s ease;
     }
-    nav a {
-      color: #00ffff;
-      text-decoration: none;
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-    .glowBox {
-      background: #1e1e1e;
-      margin: 20px 0;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 25px #00ffe1;
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 600;
     }
-    input, button {
-      display: block;
+
+    input, select, button {
       width: 100%;
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 8px;
+      padding: 12px;
+      margin: 10px 0;
       border: none;
+      border-radius: 8px;
+      outline: none;
+      font-size: 15px;
     }
+
+    input, select {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+
     button {
-      background: #00ffcc;
+      background-color: #1abc9c;
+      color: #fff;
       font-weight: bold;
-      color: black;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #16a085;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    a {
+      color: #1abc9c;
       cursor: pointer;
     }
-    button:hover {
-      background: #00ccb3;
-    }
-    #profile-preview {
-      width: 100px;
-      height: 100px;
-      margin-top: 10px;
-      border-radius: 50%;
-      object-fit: cover;
+
+    #createForm {
       display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
     }
   </style>
 </head>
 <body>
-  <header>
-    <button id="menu-toggle">☰</button>
-    <nav id="main-menu" class="hidden">
-      <ul>
-        <li><a href="#rewards">🎁 Daily Rewards</a></li>
-        <li><a href="#server">🖥️ Server Panel</a></li>
-        <li><a href="#form">📝 Form</a></li>
-        <li><a href="#support">📬 Support</a></li>
-        <li><a href="https://minecraft2613.github.io/taxess/" target="_blank">💰 View Tax</a></li>
-        <li><a href="#account">⚙️ Account Settings</a></li>
-      </ul>
-    </nav>
-  </header>
+  <div class="glass">
+    <h2>🏦 Minecraft Bank Login</h2>
+    <input type="text" id="loginId" placeholder="Bank ID" />
+    <input type="password" id="loginPass" placeholder="Password" />
+    <input type="text" id="loginMC" placeholder="Minecraft Name (Optional)" />
+    <button onclick="login()">Login</button>
+    <p>Don't have an account? <a onclick="toggleCreate()">Create one</a></p>
 
-  <main>
-    <section id="server" class="glowBox">
-      <h2>🖥️ Server Info</h2>
-      <p><strong>Java & Bedrock IP:</strong> mc1524209.fmcs.cloud</p>
-      <p><strong>Port:</strong> 38762</p>
-      <p><strong>Version:</strong> Java 1.21.4+ | Bedrock 1.21+</p>
-    </section>
-
-    <section id="form" class="glowBox">
-      <h2>📝 Form</h2>
-      <p><a href="https://minecraft2613.github.io/joining-form/" target="_blank">Click here to fill your joining bonus form</a></p>
-    </section>
-
-    <section id="support" class="glowBox">
-      <h2>📬 Support</h2>
-      <ul>
-        <li><a href="https://discord.gg/yourdiscord" target="_blank">Discord Server</a></li>
-        <li><a href="https://instagram.com/yourpage" target="_blank">Instagram</a></li>
-        <li><a href="https://yourdomain.com/tickets" target="_blank">Ticket System</a></li>
-      </ul>
-    </section>
-
-    <section id="account" class="glowBox">
-      <h2>⚙️ Account Settings</h2>
-      <label>Contact ID (Discord / Instagram)</label>
-      <input type="text" id="contact-id" placeholder="Enter contact ID">
-      <label>Profile Picture URL</label>
-      <input type="text" id="profile-pic-url" placeholder="Enter image URL">
-      <img id="profile-preview" alt="Profile Preview">
-      <button id="save-settings">💾 Save Settings</button>
-    </section>
-  </main>
+    <div id="createForm">
+      <h2>📝 Create Account</h2>
+      <input type="text" id="bankName" placeholder="Bank Name" />
+      <input type="text" id="accountId" placeholder="Account ID" />
+      <input type="password" id="bankPass" placeholder="Password" />
+      <select id="edition" onchange="toggleBox()">
+        <option value="">Select Minecraft Edition</option>
+        <option value="bedrock">Bedrock</option>
+        <option value="java">Java</option>
+      </select>
+      <input type="text" id="mcName" placeholder="/box enter mc name" style="display:none;" />
+      <button onclick="createAccount()">Register</button>
+    </div>
+  </div>
 
   <script>
-    const SYNC_URL = "https://minecraft-details-acc.1987sakshamsingh.workers.dev/";
+    function toggleCreate() {
+      const form = document.getElementById("createForm");
+      form.style.display = form.style.display === "none" ? "block" : "none";
+    }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const menuToggle = document.getElementById("menu-toggle");
-      const menu = document.getElementById("main-menu");
-      const contactInput = document.getElementById("contact-id");
-      const profileInput = document.getElementById("profile-pic-url");
-      const profilePreview = document.getElementById("profile-preview");
+    function toggleBox() {
+      const edition = document.getElementById("edition").value;
+      const boxInput = document.getElementById("mcName");
+      boxInput.style.display = edition === "bedrock" ? "block" : "none";
+    }
 
-      menuToggle.addEventListener("click", () => {
-        menu.classList.toggle("hidden");
-      });
+    function createAccount() {
+      const bankName = document.getElementById("bankName").value;
+      const accountId = document.getElementById("accountId").value;
+      const bankPass = document.getElementById("bankPass").value;
+      const edition = document.getElementById("edition").value;
+      const mcName = document.getElementById("mcName").value;
+      const bankId = "BANK" + Math.floor(100000 + Math.random() * 900000);
 
-      document.getElementById("save-settings").addEventListener("click", async () => {
-        const username = localStorage.getItem("account_username") || prompt("Enter your username:");
-        if (!username) return;
+      const user = {
+        bankName,
+        accountId,
+        bankPass,
+        edition,
+        mcName,
+        bankId
+      };
 
-        const contact = contactInput.value.trim();
-        const picURL = profileInput.value.trim();
-        const payload = { username, contact, profilePic: picURL };
+      localStorage.setItem(accountId, JSON.stringify(user));
+      alert("✅ Account Created. Your Bank ID is " + bankId);
+    }
 
-        localStorage.setItem("account_username", username);
-        localStorage.setItem("account_contact", contact);
-        localStorage.setItem("account_profile_pic", picURL);
+    function login() {
+      const id = document.getElementById("loginId").value;
+      const pass = document.getElementById("loginPass").value;
+      const data = localStorage.getItem(id);
 
-        if (picURL) {
-          profilePreview.src = picURL;
-          profilePreview.style.display = "block";
+      if (data) {
+        const user = JSON.parse(data);
+        if (user.bankPass === pass) {
+          alert("🎉 Welcome back, " + (user.mcName || user.accountId) + "!");
+        } else {
+          alert("❌ Incorrect password.");
         }
-
-        try {
-          await fetch(SYNC_URL, {
-            method: "POST",
-            headers: {{ "Content-Type": "application/json" }},
-            body: JSON.stringify(payload)
-          });
-          alert("✅ Settings saved to cloud.");
-        } catch (e) {
-          alert("❌ Failed to sync.");
-          console.error(e);
-        }
-      });
-
-      async function loadSettings() {
-        const username = localStorage.getItem("account_username");
-        if (!username) return;
-
-        try {
-          const res = await fetch(SYNC_URL);
-          const data = await res.json();
-          const user = data.find(u => u.username === username);
-          if (!user) return;
-
-          contactInput.value = user.contact || "";
-          profileInput.value = user.profilePic || "";
-          if (user.profilePic) {
-            profilePreview.src = user.profilePic;
-            profilePreview.style.display = "block";
-          }
-        } catch (err) {
-          console.error("Load failed:", err);
-        }
+      } else {
+        alert("🙁 Account not found.");
       }
-
-      loadSettings();
-    });
+    }
   </script>
 </body>
 </html>
